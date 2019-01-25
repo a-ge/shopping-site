@@ -55,7 +55,7 @@ def show_melon(melon_id):
 
 
 @app.route("/cart")
-def show_shopping_cart():
+def show_shopping_cart(melon_id):
     """Display content of shopping cart."""
 
     # TODO: Display the contents of the shopping cart.
@@ -75,6 +75,13 @@ def show_shopping_cart():
     #
     # Make sure your function can also handle the case wherein no cart has
     # been added to the session
+    #melon = melon_id
+    melon = melons.get_by_id(melon_id)
+
+    for cart_melon in session["cart"]:
+        cart_melon_name = melon.com
+        detail = [melon, session["cart"][melon], melon_types[melon][price]]
+
 
     return render_template("cart.html")
 
@@ -96,7 +103,6 @@ def add_to_cart(melon_id):
     if session.get("cart") == None:
         session["cart"] = {}
     
-   
     # - check if the desired melon id is the cart, and if not, put it in
     # - increment the count for that melon id by 1
     session["cart"][melon_id] = session["cart"].get(melon_id, 0) + 1
